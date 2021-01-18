@@ -24,7 +24,6 @@
   const updateTiles = (elementIndex, texIndex, rotation) => {
     grid[elementIndex].tex = texIndex;
     grid[elementIndex].rotation = rotation;
-    console.log(grid[elementIndex]);
     grid = grid;
   };
 </script>
@@ -32,14 +31,10 @@
 <div
   class="gridContainer p-4"
   on:mousedown={() => {
-    if (selectedIndex > -1) {
-      mouseIsDown = true;
-    }
+    mouseIsDown = true;
   }}
   on:mouseup={() => {
-    if (selectedIndex > -1) {
-      mouseIsDown = false;
-    }
+    mouseIsDown = false;
   }}
   on:mouseleave={() => {
     mouseIsDown = false;
@@ -54,13 +49,19 @@
       <div
         class="gridElement"
         on:mousedown|preventDefault={() => {
-          if (selectedIndex > -1) {
-            updateTiles(i, selectedIndex, data[selectedIndex].rotation);
-          }
+          updateTiles(
+            i,
+            selectedIndex,
+            selectedIndex > -1 ? data[selectedIndex].rotation : undefined
+          );
         }}
         on:mouseenter={() => {
-          if (mouseIsDown && selectedIndex > -1) {
-            updateTiles(i, selectedIndex, data[selectedIndex].rotation);
+          if (mouseIsDown) {
+            updateTiles(
+              i,
+              selectedIndex,
+              selectedIndex > -1 ? data[selectedIndex].rotation : undefined
+            );
           }
         }}
       >

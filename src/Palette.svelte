@@ -1,6 +1,4 @@
 <script>
-  import { element, null_to_empty } from "svelte/internal";
-  import RotateButton from "./components/RotateButton.svelte";
   import PaletteItem from "./PaletteItem.svelte";
 
   export let data = [];

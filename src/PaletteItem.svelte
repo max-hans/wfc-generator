@@ -1,14 +1,25 @@
 <script>
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
+  import RotateButton from "./components/RotateButton.svelte";
 
   export let data;
   export let active;
-  import RotateButton from "./components/RotateButton.svelte";
+  let rotationMax = 0;
 
-  const isRotateable = (char) => {
-    return "ILT".includes(char);
+  const computeRotationMax = (char) => {
+    console.log(char);
+    if ("LT".includes(char)) {
+      return 4;
+    } else if (char === "I") {
+      return 2;
+    }
+    return 0;
   };
+
+  if (data) {
+    rotationMax = computeRotationMax(data.symmetry);
+  }
 </script>
 
 <div
@@ -31,9 +42,7 @@
     style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; text-align: right"
   >
     <h6 class="is-6 m-0">{data.name}</h6>
-    {#if isRotateable(data.symmetry)}
-      <RotateButton on:rotate />
-    {/if}
+    <RotateButton on:rotate max={rotationMax} />
   </div>
 </div>
 

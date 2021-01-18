@@ -18,7 +18,7 @@ export default [
   { data: road, name: "road", symmetry: "I" },
   { data: roadturn, name: "roadturn", symmetry: "L" },
   { data: t, name: "t", symmetry: "T" },
-  { data: tower, name: "tower", symmetry: "L" },
+  { data: tower, name: "tower", symmetry: "X" },
   { data: wall, name: "wall", symmetry: "I" },
   { data: wallriver, name: "wallriver", symmetry: "I" },
   { data: wallroad, name: "wallroad", symmetry: "I" },
