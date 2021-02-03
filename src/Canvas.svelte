@@ -1,29 +1,35 @@
 <script>
-  import { onMount } from "svelte/internal";
+  import { onMount, createEventDispatcher } from "svelte/internal";
+
+  const dispatch = createEventDispatcher();
 
   export let selectedIndex;
   export let data;
 
-  export let x = 20;
-  export let y = 20;
+  export let x = 10;
+  export let y = 10;
 
   let grid = [];
 
   let mouseIsDown = false;
 
-  onMount(() => {
+  const createGrid = (width, height) => {
     const newGrid = [];
-    for (let i = 0; i < y; i++) {
-      for (let j = 0; j < x; j++) {
+    for (let i = 0; i < height; i++) {
+      for (let j = 0; j < width; j++) {
         newGrid.push({ tex: -1, x: j, y: i });
       }
     }
-    grid = newGrid;
+    return newGrid;
+  };
+
+  onMount(() => {
+    grid = createGrid(x, y);
   });
 
   const updateTiles = (elementIndex, texIndex, rotation) => {
     grid[elementIndex].tex = texIndex;
-    grid[elementIndex].rotation = rotation;
+    grid[elementIndex].rotation = rotation || 0;
     grid = grid;
   };
 </script>
@@ -35,6 +41,7 @@
   }}
   on:mouseup={() => {
     mouseIsDown = false;
+    console.log(grid);
   }}
   on:mouseleave={() => {
     mouseIsDown = false;
@@ -42,6 +49,18 @@
 >
   <div class="block p-3">
     <h3 class="is-3">Canvas</h3>
+    <button
+      class="button is-outlined"
+      on:click={() => dispatch("submitGrid", { grid, resolution: { x, y } })}
+      >submit</button
+    >
+    <button class="button is-outlined is-success" disabled>download</button>
+    <button
+      class="button is-outlined is-danger"
+      on:click={() => {
+        grid = createGrid(x, y);
+      }}>clear</button
+    >
   </div>
 
   <div class="grid" style="grid-template-columns: repeat({x}, 1fr;">
@@ -123,7 +142,7 @@
     transition: box-shadow 0.2s;
     z-index: 0;
   }
-  .gridImg:hover {
+  .gridElement:hover {
     box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
     transform: scale(1.05);
     z-index: 10000;

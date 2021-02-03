@@ -18,6 +18,7 @@
 <div class="paletteContainer p-4">
   <div class="block p-3">
     <h3 class="is-3">Palette</h3>
+    <button class="button is-outlined" disabled>load</button>
   </div>
   <div class="block scrollable p-3">
     <PaletteItem
