@@ -5,6 +5,10 @@ import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import css from "rollup-plugin-css-only";
 import image from "@rollup/plugin-image";
+import builtins from "rollup-plugin-node-builtins";
+import globals from "rollup-plugin-node-globals";
+import json from "@rollup/plugin-json";
+import replace from "@rollup/plugin-replace";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -62,6 +66,10 @@ export default {
       dedupe: ["svelte"],
     }),
     commonjs(),
+    globals({ process: true, buffer: true }),
+    builtins({ crypto: true }),
+    replace(),
+    json(),
 
     // In dev mode, call `npm run start` once
     // the bundle has been generated

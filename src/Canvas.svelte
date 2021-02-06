@@ -13,6 +13,8 @@
 
   let mouseIsDown = false;
 
+  let configIsUptoDate = false;
+
   const createGrid = (width, height) => {
     const newGrid = [];
     for (let i = 0; i < height; i++) {
@@ -31,6 +33,7 @@
     grid[elementIndex].tex = texIndex;
     grid[elementIndex].rotation = rotation || 0;
     grid = grid;
+    configIsUptoDate = false;
   };
 </script>
 
@@ -51,10 +54,19 @@
     <h3 class="is-3">Canvas</h3>
     <button
       class="button is-outlined"
-      on:click={() => dispatch("submitGrid", { grid, resolution: { x, y } })}
-      >submit</button
+      on:click={() => {
+        configIsUptoDate = true;
+        dispatch("submitGrid", { grid, resolution: { x, y } });
+      }}>submit</button
     >
-    <button class="button is-outlined is-success" disabled>download</button>
+    <button
+      class="button is-outlined is-success"
+      disabled={!configIsUptoDate}
+      on:click={() => {
+        configIsUptoDate = true;
+        dispatch("downloadConfig");
+      }}>download</button
+    >
     <button
       class="button is-outlined is-danger"
       on:click={() => {

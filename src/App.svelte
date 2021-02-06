@@ -1,100 +1,68 @@
 <script>
   import "bulma/css/bulma.css";
-  export let name;
 
-  let selectedIndex;
+  import JSZip from "jszip";
+  import { nanoid } from "nanoid";
+  import { saveAs } from "file-saver";
 
   import Navbar from "./Navbar.svelte";
   import Controls from "./Controls.svelte";
   import Palette from "./Palette.svelte";
   import Canvas from "./Canvas.svelte";
 
+  import { cleanUpTiles } from "./tileManagement";
   import tiles from "../data/img/index";
 
-  const indexToName = (index) => {
-    return tiles[index].name;
-  };
+  let selectedIndex;
 
-  console.log(tiles);
+  let config = null;
+
+  const downloadFiles = async (tileData, neighborData) => {
+    const zip = new JSZip();
+
+    const dataToDownload = { tiles: tileData, neighbors: neighborData };
+
+    var blob = new Blob([JSON.stringify(dataToDownload)], {
+      type: "text/plain;charset=utf-8",
+    });
+
+    console.log("data", dataToDownload);
+    /* 
+    await Promise.all(
+      codeUrls.map(async (code, i) => {
+        const resp = await fetch(code);
+        const blob = await resp.blob();
+        downloadFilename = `download-${i}.png`;
+        zip.file(downloadFilename, blob);
+      })
+    );
+
+    const now = new Date();
+    const dateString = dateFormat(now, "yymmdd-hh-mm");
+    const uuid = nanoid();
+    const archiveName = `${dateString}-${uuid}.zip`;
+
+    const projectDetails = {
+      ...selectedOption,
+      userText,
+      timestamp: Date.now(),
+      archiveName,
+    };
+
+    zip.file("settings.json", JSON.stringify(projectDetails));
+    const archive = await zip.generateAsync({
+      type: "blob",
+    });*/
+    saveAs(blob, "tiledata.json");
+  };
 
   const handleSubmit = ({ detail: tileData }) => {
     console.log(tileData);
     const { grid } = tileData;
+    const relations = cleanUpTiles(tiles, grid);
 
-    // filter out empty tiles
-    const tilesToProcess = grid.filter((tile) => tile.tex > -1);
-
-    // group all tiles of same type
-    const sortedByType = tiles
-      .map((tileType, i) => {
-        return {
-          ...tileType,
-          occurences: tilesToProcess.filter((gridTile) => gridTile.tex === i),
-        };
-      })
-      .filter((tileType) => !!tileType.occurences.length);
-
-    // get all neighbors for every tyle type
-    const relations = sortedByType
-      .map((tileType) => {
-        const relationsForTileType = tileType.occurences.map((currentTile) => {
-          const neighbors = [];
-
-          // get tile next to current tile
-          const right = tilesToProcess.find(
-            (otherTile) =>
-              otherTile.x === currentTile.x + 1 && otherTile.y === currentTile.y
-          );
-          if (right) {
-            neighbors.push({
-              left: `${indexToName(currentTile.tex)} ${currentTile.rotation}`,
-              right: `${indexToName(right.tex)} ${right.rotation}`,
-            });
-          }
-          // get tile beneath current tile
-          const beneath = tilesToProcess.find(
-            (otherTile) =>
-              otherTile.y === currentTile.y + 1 && otherTile.x === currentTile.x
-          );
-
-          // to stay consistent just rotate by 90° and also list as pair of "left / right"
-          if (beneath) {
-            neighbors.push({
-              left: `${indexToName(currentTile.tex)} ${
-                (currentTile.rotation + 1) % 4
-              }`,
-              right: `${indexToName(beneath.tex)} ${
-                (beneath.rotation + 1) % 4
-              }`,
-            });
-          }
-
-          return neighbors.filter((neighbor) => !!neighbor);
-        });
-        return relationsForTileType;
-      })
-      .filter((type) => type.length > 0);
-
-    // flatten all types, so only relations stay. also remove empty remains
-    console.log("relations", relations);
-    const relationsFlattened = relations
-      .flat()
-      .filter((elem) => elem.length > 0)
-      .flat();
-    console.log("relationsFlattened", relationsFlattened);
-
-    // get rid of duplicates (lazy implementation)
-    if (relationsFlattened.length > 0) {
-      const relationsCleaned = relationsFlattened
-        .map((elem) => JSON.stringify(elem))
-        .reduce(function (a, b) {
-          if (a.indexOf(b) < 0) a.push(b);
-          return a;
-        }, [])
-        .map((elem) => JSON.parse(elem));
-
-      console.log(relationsCleaned);
-    }
+    config = relations;
+    console.log(relations);
   };
 </script>
 
@@ -106,7 +74,17 @@
         <Palette data={tiles} bind:selectedIndex />
       </div>
       <div class="column" style="height: 100%">
-        <Canvas data={tiles} {selectedIndex} on:submitGrid={handleSubmit} />
+        <Canvas
+          data={tiles}
+          {selectedIndex}
+          on:submitGrid={handleSubmit}
+          on:changedGrid={() => {
+            config = null;
+          }}
+          on:downloadConfig={() => {
+            downloadFiles(tiles, config);
+          }}
+        />
       </div>
     </div>
   </div>
