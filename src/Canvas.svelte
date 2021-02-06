@@ -1,6 +1,6 @@
 <script>
   import { onMount, createEventDispatcher } from "svelte/internal";
-
+  import TileImage from "./components/TileImage.svelte";
   const dispatch = createEventDispatcher();
 
   export let selectedIndex;
@@ -85,19 +85,11 @@
         }}
       >
         <div class="gridElementContent">
-          {#if gridElem.tex > -1}
-            <img
-              class="gridImg"
-              src={data[gridElem.tex].data}
-              alt={gridElem.name}
-              draggable={false}
-              style="transform: rotate({gridElem.rotation * 90 || 0}deg)"
-            />
-          {:else}
-            <div class="gridImg gridPlaceholder">
-              <!-- {gridElem.tex} -->
-            </div>
-          {/if}
+          <TileImage
+            name={gridElem.name}
+            tex={data[gridElem.tex] ? data[gridElem.tex].data : undefined}
+            rotation={gridElem.rotation}
+          />
         </div>
       </div>
     {/each}
@@ -108,7 +100,6 @@
   .gridContainer {
     width: 100%;
     height: 100%;
-
     display: flex;
     flex-direction: column;
   }
@@ -135,20 +126,9 @@
     left: 0;
   }
 
-  .gridImg {
-    width: 100%;
-    height: 100%;
-    image-rendering: pixelated;
-    transition: box-shadow 0.2s;
-    z-index: 0;
-  }
   .gridElement:hover {
     box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
     transform: scale(1.05);
     z-index: 10000;
-  }
-
-  .gridPlaceholder {
-    background-color: #fcfcfc;
   }
 </style>
