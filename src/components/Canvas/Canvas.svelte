@@ -68,14 +68,14 @@
           on:click={() => {
             configIsUptoDate = true;
             dispatch("submitGrid", { grid: $grid, tiles: $tiles });
-          }}>submit</button
+          }}>compute</button
         >
         <button
           class="button is-outlined is-success"
           disabled={!configIsUptoDate}
           on:click={() => {
             configIsUptoDate = true;
-            dispatch("downloadConfig");
+            dispatch("downloadConfig", { tiles: $tiles });
           }}>download</button
         >
         <button

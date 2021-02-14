@@ -1,5 +1,5 @@
 <script>
-  import { selectedIndex } from "../Stores/dataStore";
+  import { selectedIndex, tiles } from "../Stores/dataStore";
 
   import JSZip from "jszip";
   import { saveAs } from "file-saver";
@@ -11,10 +11,16 @@
 
   let relations = null;
 
-  const downloadFiles = async (tileData, neighborData) => {
+  const handleDownload = async (tileData, neighborData) => {
     const zip = new JSZip();
 
-    const dataToDownload = { tiles: tileData, neighbors: neighborData };
+    const tilesSmall = tileData.map((elem) => {
+      const newElem = { ...elem };
+      delete newElem.uri;
+      return newElem;
+    });
+
+    const dataToDownload = { tiles: tilesSmall, neighbors: neighborData };
 
     var blob = new Blob([JSON.stringify(dataToDownload)], {
       type: "text/plain;charset=utf-8",
@@ -45,9 +51,7 @@
       on:changedGrid={() => {
         config = null;
       }}
-      on:downloadConfig={() => {
-        downloadFiles(tiles, config);
-      }}
+      on:downloadConfig={handleDownload($tiles, relations)}
     />
   </div>
 </div>

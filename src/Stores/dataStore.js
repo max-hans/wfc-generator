@@ -31,3 +31,4 @@ tiles.useLocalStorage();
 imageData.useLocalStorage();
 modalOpen.useLocalStorage();
 grid.useLocalStorage();
+mode.useLocalStorage();
