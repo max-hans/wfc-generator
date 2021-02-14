@@ -1,9 +1,8 @@
 <script>
   /* import Generate from "./routes/Generate.svelte"; */
+  import "bulma/css/bulma.css";
   import Create from "./routes/Create.svelte";
   import Generate from "./routes/Generate.svelte";
-
-  import "bulma/css/bulma.css";
 
   import Navbar from "./components/Navbar.svelte";
 
@@ -19,10 +18,7 @@
 </script>
 
 <div class="maincontainer">
-  <Navbar>
-    <a class="navbar-item" on:click={() => setMode("create")}>create</a>
-    <a class="navbar-item" on:click={() => setMode("generate")}>generate</a>
-  </Navbar>
+  <Navbar />
 
   <div class="content">
     {#if $mode === "create"}
@@ -40,6 +36,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: auto;
   }
   .content {
     flex-grow: 1;

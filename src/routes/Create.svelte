@@ -33,7 +33,7 @@
   };
 </script>
 
-<div class="columns" style="height: 100%">
+<div class="columns" style="height: 100%; width: 100%;">
   <div class="column is-narrow" style="height: 100%">
     <Palette bind:selectedIndex={$selectedIndex} />
   </div>

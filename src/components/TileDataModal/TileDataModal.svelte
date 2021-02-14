@@ -3,6 +3,7 @@
   import { imgToDataURI } from "../../scripts/utils";
   import { validateConfig } from "./validation";
   import { modalOpen, tiles } from "../../Stores/dataStore";
+  import exampleSet from "../../exampleSet/index";
   import TiledataRow from "./TiledataRow.svelte";
   let files = [];
   let configFileUpload;
@@ -55,6 +56,12 @@
     });
   }
 
+  const loadExampleSet = () => {
+    const newSet = exampleSet;
+    console.log(newSet);
+    tiles.set(newSet);
+  };
+
   $: if (configFileUpload) {
     const fr = new FileReader();
 
@@ -97,7 +104,7 @@
                 <span class="file-icon">
                   <ion-icon name="arrow-up-outline" />
                 </span>
-                <span class="file-label"> upload images </span>
+                <span class="file-label"> images </span>
               </span>
             </label>
           </div>
@@ -114,21 +121,18 @@
                 <span class="file-icon">
                   <ion-icon name="arrow-up-outline" />
                 </span>
-                <span class="file-label"> upload config </span>
+                <span class="file-label"> config </span>
               </span>
             </label>
           </div>
-
-          <button
-            class="button is-outlined is-success withMargin"
-            on:click={downloadConfig}>download config</button
-          >
-
-          <button
-            class="button is-outlined is-danger withMargin"
-            on:click={clearConfig}>clear config</button
-          >
         </div>
+        <p>
+          <a on:click={downloadConfig}>download config</a>
+          -
+          <a on:click={clearConfig}>clear config</a>
+          -
+          <a on:click={loadExampleSet}>load example</a>
+        </p>
       </div>
       <section class="section">
         <h4 class="title is-4">tiles</h4>

@@ -15,9 +15,7 @@ export const imgToDataURI = (img) => {
   return new Promise((res, rej) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      const base64String = reader.result
-        .replace("data:", "")
-        .replace(/^.+,/, "");
+      const base64String = reader.result;
       res(base64String);
     };
     reader.readAsDataURL(img);
@@ -25,8 +23,8 @@ export const imgToDataURI = (img) => {
 };
 
 export const uriToImage = (type, uri) => {
-  const data = `data:${type};base64,${uri}`;
-  return data;
+  /* const data = `data:${type};base64,${uri}`; */
+  return uri;
 };
 
 export const tileToImage = (tile) => {

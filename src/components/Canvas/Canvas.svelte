@@ -85,97 +85,98 @@
           }}>clear</button
         >
       </div>
-      <div class="buttonContainer">
-        <button
-          class="button {drawMode === 'pencil' ? 'is-active' : ''}"
-          on:click={() => {
-            drawMode = "pencil";
-          }}
-        >
-          <ion-icon name="pencil-outline" />
-        </button>
-
-        <button
-          class="button {drawMode === 'fill' ? 'is-active' : ''}"
-          on:click={() => {
-            drawMode = "fill";
-          }}
-        >
-          <ion-icon name="color-fill-outline" />
-        </button>
-
-        <button
-          class="button {drawMode === 'wand' ? 'is-active' : ''}"
-          on:click={() => {
-            drawMode = "wand";
-          }}
-        >
-          <ion-icon name="color-wand-outline" />
-        </button>
-      </div>
     </div>
   </div>
-
-  <div class="grid" style="grid-template-columns: repeat({x}, 1fr;">
-    {#each $grid.data as gridElem, i}
-      <div
-        class="gridElement"
-        on:mousedown|preventDefault={() => {
-          if (drawMode === "pencil") {
-            tileSetting = {
-              tile: $selectedIndex,
-              rotation:
-                $selectedIndex > -1
-                  ? $tiles[$selectedIndex].rotation
-                  : undefined,
-            };
-            updateTiles(i, tileSetting.tile, tileSetting.rotation);
-          }
-        }}
-        on:mouseenter={() => {
-          if (drawMode === "pencil") {
-            if (mouseIsDown) {
-              updateTiles(i, tileSetting.tile, tileSetting.rotation);
-            }
-          }
-        }}
+  <div class="canvasContainer">
+    <div class="buttonContainer">
+      <button
+        class="button {drawMode === 'pencil' ? 'is-active' : ''}"
         on:click={() => {
-          if (drawMode === "wand") {
-            const currentTileProps = $grid.data[i];
-            console.log(currentTileProps);
-            const similarTiles = $grid.data
-              .map((elem, i) => {
-                return { ...elem, index: i };
-              })
-              .filter((elem) => elem.tex === currentTileProps.tex);
-            console.log("similar", similarTiles);
-            similarTiles.forEach((elem) =>
-              updateTiles(
-                elem.index,
-                $selectedIndex,
-                currentTileProps.rotation || -1
-              )
-            );
-          }
+          drawMode = "pencil";
         }}
       >
-        <div class="gridElementContent">
-          <TileImage
-            name={gridElem.name}
-            tex={gridElem.tex > -1
-              ? tileToImage($tiles[gridElem.tex])
-              : undefined}
-            rotation={gridElem.rotation}
-          />
+        <ion-icon name="pencil-outline" />
+      </button>
+
+      <button
+        class="button {drawMode === 'fill' ? 'is-active' : ''}"
+        on:click={() => {
+          drawMode = "fill";
+        }}
+      >
+        <ion-icon name="color-fill-outline" />
+      </button>
+
+      <button
+        class="button {drawMode === 'wand' ? 'is-active' : ''}"
+        on:click={() => {
+          drawMode = "wand";
+        }}
+      >
+        <ion-icon name="color-wand-outline" />
+      </button>
+    </div>
+    <div class="grid" style="grid-template-columns: repeat({x}, 1fr;">
+      {#each $grid.data as gridElem, i}
+        <div
+          class="gridElement"
+          on:mousedown|preventDefault={() => {
+            if (drawMode === "pencil") {
+              tileSetting = {
+                tile: $selectedIndex,
+                rotation:
+                  $selectedIndex > -1
+                    ? $tiles[$selectedIndex].rotation
+                    : undefined,
+              };
+              updateTiles(i, tileSetting.tile, tileSetting.rotation);
+            }
+          }}
+          on:mouseenter={() => {
+            if (drawMode === "pencil") {
+              if (mouseIsDown) {
+                updateTiles(i, tileSetting.tile, tileSetting.rotation);
+              }
+            }
+          }}
+          on:click={() => {
+            if (drawMode === "wand") {
+              const currentTileProps = $grid.data[i];
+              console.log(currentTileProps);
+              const similarTiles = $grid.data
+                .map((elem, i) => {
+                  return { ...elem, index: i };
+                })
+                .filter((elem) => elem.tex === currentTileProps.tex);
+              console.log("similar", similarTiles);
+              similarTiles.forEach((elem) =>
+                updateTiles(
+                  elem.index,
+                  $selectedIndex,
+                  currentTileProps.rotation || -1
+                )
+              );
+            }
+          }}
+        >
+          <div class="gridElementContent">
+            <TileImage
+              name={gridElem.name}
+              tex={gridElem.tex > -1
+                ? tileToImage($tiles[gridElem.tex])
+                : undefined}
+              rotation={gridElem.rotation}
+            />
+          </div>
         </div>
-      </div>
-    {/each}
+      {/each}
+    </div>
   </div>
 </div>
 
 <style>
   .gridContainer {
-    width: 100%;
+    /* width: 100%; */
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -215,6 +216,6 @@
     justify-content: space-between;
   }
 
-  .buttonContainer {
+  .canvasContainer {
   }
 </style>

@@ -41,7 +41,7 @@
     <div class="paletteImg" />
   {/if}
   <div
-    style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; text-align: right"
+    style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; text-align: left; padding: 0.5em;"
   >
     <h6 class="is-6 m-0">{data.displayName}</h6>
     <RotateButton on:rotate max={rotationMax} />
