@@ -1,13 +1,14 @@
 <script>
   import PaletteItem from "./PaletteItem.svelte";
 
-  export let data = [];
+  import { tiles, modalOpen } from "../../Stores/dataStore";
+
   export let selectedIndex = -1;
 
   const updateRotation = (index, rotationValue) => {
-    data[index].rotation = rotationValue;
-    data = data;
-    console.log(data);
+    const newTiles = [...$tiles];
+    newTiles[index].rotation = rotationValue;
+    tiles.set(newTiles);
   };
 
   const updateIndex = (index) => {
@@ -18,17 +19,28 @@
 <div class="paletteContainer p-4">
   <div class="block p-3">
     <h3 class="is-3">Palette</h3>
-    <button class="button is-outlined" disabled>load</button>
+
+    <button
+      class="button is-fullwidth"
+      on:click={() => {
+        console.log("press");
+        modalOpen.set(true);
+      }}
+    >
+      <span>edit palette</span>
+      <ion-icon name="settings-outline" />
+    </button>
   </div>
   <div class="block scrollable p-3">
     <PaletteItem
-      data={{ name: "delete", data: null }}
+      data={{ displayName: "delete", data: null }}
       active={selectedIndex === -1}
       on:select={() => {
         updateIndex(-1);
       }}
     />
-    {#each data as tile, i}
+
+    {#each $tiles as tile, i}
       <PaletteItem
         data={tile}
         active={selectedIndex === i}

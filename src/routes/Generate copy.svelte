@@ -1,5 +1,8 @@
 <script>
   import { onMount, createEventDispatcher } from "svelte/internal";
+
+  import { grid, tiles } from "./Stores/dataStore";
+
   import TileImage from "./components/TileImage.svelte";
   const dispatch = createEventDispatcher();
 
@@ -9,7 +12,7 @@
   export let x = 10;
   export let y = 10;
 
-  let grid = [];
+  /* let grid = []; */
 
   let mouseIsDown = false;
 

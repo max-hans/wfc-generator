@@ -1,4 +1,6 @@
-export const cleanUpTiles = (tiles, grid) => {
+export const cleanUpTiles = (grid, tiles) => {
+  console.log(grid);
+  console.log(tiles);
   const indexToName = (index) => {
     return tiles[index].name;
   };

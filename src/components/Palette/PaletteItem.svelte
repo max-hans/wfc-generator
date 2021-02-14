@@ -1,14 +1,16 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { uriToImage } from "../../scripts/utils";
+
   const dispatch = createEventDispatcher();
-  import RotateButton from "./components/RotateButton.svelte";
+  import RotateButton from "./RotateButton.svelte";
 
   export let data;
   export let active;
+
   let rotationMax = 0;
 
   const computeRotationMax = (char) => {
-    console.log(char);
     if ("LT".includes(char)) {
       return 4;
     } else if (char === "I") {
@@ -28,10 +30,10 @@
     dispatch("select");
   }}
 >
-  {#if data.data}
+  {#if data.uri}
     <img
       class="paletteImg"
-      src={data.data}
+      src={uriToImage(data.type, data.uri)}
       alt={data.name}
       style="transform: rotate({data.rotation * 90}deg);"
     />
@@ -41,7 +43,7 @@
   <div
     style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; text-align: right"
   >
-    <h6 class="is-6 m-0">{data.name}</h6>
+    <h6 class="is-6 m-0">{data.displayName}</h6>
     <RotateButton on:rotate max={rotationMax} />
   </div>
 </div>

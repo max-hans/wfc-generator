@@ -1,7 +1,5 @@
 <script>
   export let tex, rotation, name;
-
-  console.log(rotation);
 </script>
 
 {#if tex}
@@ -13,9 +11,7 @@
     style="transform: rotate({rotation * 90 || 0}deg)"
   />
 {:else}
-  <div class="gridImg gridPlaceholder">
-    <!-- {gridElem.tex} -->
-  </div>
+  <div class="gridImg gridPlaceholder" />
 {/if}
 
 <style>
@@ -28,6 +24,6 @@
   }
 
   .gridPlaceholder {
-    background-color: #fcfcfc;
+    background-color: lightgray;
   }
 </style>

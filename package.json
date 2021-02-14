@@ -30,6 +30,7 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
     "sirv-cli": "^1.0.0",
-    "svelma": "^0.4.0"
+    "svelma": "^0.4.0",
+    "validate": "^5.1.0"
   }
 }
