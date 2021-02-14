@@ -3,6 +3,7 @@
   import "bulma/css/bulma.css";
   import Create from "./routes/Create.svelte";
   import Generate from "./routes/Generate.svelte";
+  import About from "./routes/About.svelte";
 
   import Navbar from "./components/Navbar.svelte";
 
@@ -25,6 +26,8 @@
       <Create />
     {:else if $mode === "generate"}
       <Generate />
+    {:else if $mode === "about"}
+      <About />
     {/if}
   </div>
 </div>
