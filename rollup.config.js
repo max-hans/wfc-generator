@@ -64,6 +64,7 @@ export default {
     resolve({
       browser: true,
       dedupe: ["svelte"],
+      preferBuiltins: true,
     }),
     commonjs(),
     globals({ process: true, buffer: true }),
