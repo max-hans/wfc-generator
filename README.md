@@ -27,7 +27,7 @@ The goal of the wfc-generator is to provide a simple environment to create tile-
 
 ## Stack
 
-The whole page was built using [svelteJS](https://svelte.dev/) and BulmaCSS for styling. There is no backend of any sort and no user data is saved.
+The whole page was built using [SvelteJS](https://svelte.dev/) and BulmaCSS for styling. There is no backend of any sort and no user data is saved.
 
 All data you enter is saved within the browser in localstorage. That's why your images should not be too large, otherwise your browser might do weird stuff to it or just not save it at all.
 
@@ -46,3 +46,9 @@ npm install
 ```bash
 npm run dev
 ```
+
+## TODO
+
+- Make the size of the tilemap flexible
+- Make everything more stable 😬
+It is strongly recommended to backup (download) your data from time to time. The structure of how data is handled might change over time. So your data (or at least the config for the tiles) might be unusable at some point.**
