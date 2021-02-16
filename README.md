@@ -51,4 +51,5 @@ npm run dev
 
 - Make the size of the tilemap flexible
 - Make everything more stable 😬
+
 It is strongly recommended to backup (download) your data from time to time. The structure of how data is handled might change over time. So your data (or at least the config for the tiles) might be unusable at some point.**
