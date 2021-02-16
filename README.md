@@ -1,6 +1,6 @@
 # Wave Function Collapse - Tilemap Generator
 
-![banner](github\screenshot.jpg)
+![banner](github/screenshot.jpg)
 
 ## About
 
