@@ -97,14 +97,14 @@
         <ion-icon name="pencil-outline" />
       </button>
 
-      <button
+      <!-- <button
         class="button {drawMode === 'fill' ? 'is-active' : ''}"
         on:click={() => {
           drawMode = "fill";
         }}
       >
         <ion-icon name="color-fill-outline" />
-      </button>
+      </button> -->
 
       <button
         class="button {drawMode === 'wand' ? 'is-active' : ''}"
