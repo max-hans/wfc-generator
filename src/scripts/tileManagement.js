@@ -1,3 +1,13 @@
+const removeFileExt = (filenameWithExtension) => {
+  const frags = filenameWithExtension.split(".");
+  if (frags.length > 1) {
+    frags.pop();
+    return frags.join(".");
+  } else {
+    return frags;
+  }
+};
+
 export const cleanUpTiles = (grid, tiles) => {
   console.log(grid);
   console.log(tiles);
@@ -31,8 +41,10 @@ export const cleanUpTiles = (grid, tiles) => {
         );
         if (right) {
           neighbors.push({
-            left: `${indexToName(currentTile.tex)} ${currentTile.rotation}`,
-            right: `${indexToName(right.tex)} ${right.rotation}`,
+            left: `${removeFileExt(indexToName(currentTile.tex))} ${
+              currentTile.rotation
+            }`,
+            right: `${removeFileExt(indexToName(right.tex))} ${right.rotation}`,
           });
         }
         // get tile beneath current tile
@@ -44,10 +56,12 @@ export const cleanUpTiles = (grid, tiles) => {
         // to stay consistent just rotate by 90° and also list as pair of "left / right"
         if (beneath) {
           neighbors.push({
-            left: `${indexToName(currentTile.tex)} ${
+            left: `${removeFileExt(indexToName(currentTile.tex))} ${
               (currentTile.rotation + 1) % 4
             }`,
-            right: `${indexToName(beneath.tex)} ${(beneath.rotation + 1) % 4}`,
+            right: `${removeFileExt(indexToName(beneath.tex))} ${
+              (beneath.rotation + 1) % 4
+            }`,
           });
         }
 
