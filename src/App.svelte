@@ -1,13 +1,10 @@
 <script>
-  /* import Generate from "./routes/Generate.svelte"; */
   import "bulma/css/bulma.css";
   import Create from "./routes/Create.svelte";
-  import Generate from "./routes/Generate.svelte";
+  import Generate from "./routes/Generate/index.svelte";
   import About from "./routes/About.svelte";
-
+  
   import Navbar from "./components/Navbar.svelte";
-
-  /* import Generate from "./Generate.svelte"; */
   import TileDataModal from "./components/TileDataModal/TileDataModal.svelte";
 
   import { mode } from "./Stores/dataStore";
