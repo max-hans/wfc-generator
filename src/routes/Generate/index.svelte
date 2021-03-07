@@ -1,7 +1,9 @@
 <script>
-  import { selectedIndex, tiles, neighbors, mode } from "../Stores/dataStore";
+  import { selectedIndex, tiles, neighbors, mode } from "../../Stores/dataStore";
 
   import wfc from "wavefunctioncollapse";
+
+  /* import loadImage from "./loadImage" */
 
   let w = 10,
     h = 10;
@@ -11,6 +13,7 @@
 
   const start = () => {
     const data = { neighbors: $neighbors, tiles: $tiles, tilesize: 7 };
+    
     model = new wfc.SimpleTiledModel(data, null, 10, 10, false);
     const result = model.generate(Math.random);
     console.log(result);
