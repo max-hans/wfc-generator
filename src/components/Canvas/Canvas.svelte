@@ -29,7 +29,6 @@
   };
 
   onMount(() => {
-    console.log($grid);
     if ($grid.data.length === 0) {
       grid.set(createGrid(x, y));
       console.log($grid);

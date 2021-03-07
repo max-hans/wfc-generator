@@ -1,5 +1,5 @@
 <script>
-  import { selectedIndex, tiles } from "../Stores/dataStore";
+  import { selectedIndex, tiles, neighbors } from "../Stores/dataStore";
 
   import JSZip from "jszip";
   import { saveAs } from "file-saver";
@@ -32,10 +32,9 @@
 
   const handleSubmit = (e) => {
     const data = e.detail;
-
     const newRelations = cleanUpTiles(data.grid.data, data.tiles);
-    relations = newRelations;
-    console.log(relations);
+    neighbors.set(newRelations);
+    console.log($neighbors);
   };
 </script>
 
@@ -51,7 +50,7 @@
       on:changedGrid={() => {
         config = null;
       }}
-      on:downloadConfig={handleDownload($tiles, relations)}
+      on:downloadConfig={handleDownload($tiles, $relations)}
     />
   </div>
 </div>

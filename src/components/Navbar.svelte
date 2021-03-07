@@ -11,9 +11,15 @@
   </div>
   <div class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" on:click={() => mode.set("create")}>create</a>
-      <a class="navbar-item" on:click={() => mode.set("generate")}>generate</a>
-      <a class="navbar-item" on:click={() => mode.set("about")}>about</a>
+      <a class="navbar-item" on:click={() => mode.set("create")} href="/#"
+        >create</a
+      >
+      <a class="navbar-item" on:click={() => mode.set("generate")} href="/#"
+        >generate</a
+      >
+      <a class="navbar-item" on:click={() => mode.set("about")} href="/#"
+        >about</a
+      >
     </div>
     <div class="navbar-end">
       <a class="navbar-item" href="https://github.com/max-hans/wfc-generator">

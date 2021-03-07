@@ -20,6 +20,7 @@ const createWritableStore = (key, startValue) => {
 };
 
 export const tiles = createWritableStore("tiles", []);
+export const neighbors = createWritableStore("neighbors", []);
 export const imageData = createWritableStore("imageData", []);
 export const grid = createWritableStore("grid", { data: [], x: 0, y: 0 });
 export const modalOpen = createWritableStore("modalOpen", false);
