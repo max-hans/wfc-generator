@@ -14,20 +14,36 @@
   const handleDownload = async (tileData, neighborData) => {
     const zip = new JSZip();
 
+    const imgFolder = zip.folder("img");
+
+    const responses = await Promise.all(tileData.map(img => fetch(img.uri)));
+    responses.forEach(res => imgFolder.file(img.name, res.blob));    
+
     const tilesSmall = tileData.map((elem) => {
       const newElem = { ...elem };
       delete newElem.uri;
       return newElem;
     });
 
-    const dataToDownload = { tiles: tilesSmall, neighbors: neighborData };
 
-    var blob = new Blob([JSON.stringify(dataToDownload)], {
+
+    console.log(tilesSmall)
+
+    
+
+    const tileConfig = { path: "./img", tiles: tilesSmall, neighbors: neighborData };
+
+    zip.file("data.json", JSON.stringify(tileConfig))
+
+    /* var blob = new Blob([JSON.stringify(dataToDownload)], {
       type: "text/plain;charset=utf-8",
-    });
+    }); */
 
-    console.log("data", dataToDownload);
-    saveAs(blob, "tiledata.json");
+    const blob = await zip.generateAsync({type: "blob"})
+
+
+    /* console.log("data", dataToDownload); */
+    saveAs(blob, "config.zip");
   };
 
   const handleSubmit = (e) => {
